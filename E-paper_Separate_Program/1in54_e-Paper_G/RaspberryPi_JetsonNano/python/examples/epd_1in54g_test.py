@@ -60,6 +60,10 @@ try:
     
     logging.info("Goto Sleep...")
     epd.sleep()
+    time.sleep(3)
+
+    logging.info("close 5V, Module enters 0 power consumption ...")
+    epd.EPD_END()
         
 except IOError as e:
     logging.info(e)

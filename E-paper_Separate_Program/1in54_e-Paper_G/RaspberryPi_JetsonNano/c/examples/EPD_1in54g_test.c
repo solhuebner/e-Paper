@@ -53,16 +53,6 @@ int EPD_1in54g_test(void)
     Paint_NewImage(BlackImage, EPD_1IN54G_WIDTH, EPD_1IN54G_HEIGHT, 90, EPD_1IN54G_WHITE);
     Paint_SetScale(4);
 
-#if 0   // show bmp
-    printf("show BMP-----------------\r\n");
-    Paint_NewImage(BlackImage, EPD_1IN54G_WIDTH, EPD_1IN54G_HEIGHT, 0, EPD_1IN54G_WHITE);
-    Paint_SetScale(4);
-    Paint_SelectImage(BlackImage);
-    GUI_ReadBmp_RGB_4Color("./pic/1in54g.bmp", 0, 0);
-    EPD_1IN54G_Display(BlackImage);
-    DEV_Delay_ms(2000);
-#endif
-
 #if 1   // show bmp
     printf("show BMP-----------------\r\n");
     EPD_1IN54G_Display(Image4color);

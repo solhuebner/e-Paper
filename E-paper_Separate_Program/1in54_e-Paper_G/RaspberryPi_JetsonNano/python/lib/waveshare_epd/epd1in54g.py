@@ -53,7 +53,8 @@ class EPD:
         self.WHITE  = 0xffffff   #   01
         self.YELLOW = 0x00ffff   #   10
         self.RED    = 0x0000ff   #   11
-
+        if (epdconfig.module_init() != 0):
+            return -1
         
     # Hardware reset
     def reset(self):
@@ -96,8 +97,6 @@ class EPD:
         self.ReadBusy()
         
     def init(self):
-        if (epdconfig.module_init() != 0):
-            return -1
         # EPD hardware init start
 
         self.reset()
@@ -250,6 +249,7 @@ class EPD:
         self.send_command(0x07) # DEEP_SLEEP
         self.send_data(0XA5)
         
+    def EPD_END(self):
         epdconfig.delay_ms(2000)
         epdconfig.module_exit()
 ### END OF FILE ###

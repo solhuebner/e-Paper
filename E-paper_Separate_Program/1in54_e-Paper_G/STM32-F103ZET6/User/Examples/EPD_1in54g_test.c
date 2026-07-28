@@ -95,7 +95,7 @@ int EPD_test(void)
     Paint_NewImage(BlackImage, EPD_1IN54G_WIDTH, EPD_1IN54G_HEIGHT, 0, EPD_1IN54G_WHITE);
     Paint_SetScale(4);
 
-#if 1   // Drawing on the image
+#if 0   // Drawing on the image
     //1.Select Image
     printf("SelectImage:BlackImage\r\n");
     Paint_SelectImage(BlackImage);
@@ -112,7 +112,7 @@ int EPD_test(void)
     DEV_Delay_ms(3000);
 #endif
 
-#if 1   // Drawing on the image
+#if 0   // Drawing on the image
     //1.Select Image
     printf("SelectImage:BlackImage\r\n");
     Paint_SelectImage(BlackImage);
