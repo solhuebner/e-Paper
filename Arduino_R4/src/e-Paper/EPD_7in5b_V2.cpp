@@ -29,6 +29,7 @@
 ******************************************************************************/
 #include "EPD_7in5b_V2.h"
 
+char partFlag = 0;
 
 /******************************************************************************
 function :	Software reset
@@ -39,7 +40,7 @@ static void EPD_7IN5B_V2_Reset(void)
     DEV_Digital_Write(EPD_RST_PIN, 1);
     DEV_Delay_ms(200);
     DEV_Digital_Write(EPD_RST_PIN, 0);
-    DEV_Delay_ms(2);
+    DEV_Delay_ms(5);
     DEV_Digital_Write(EPD_RST_PIN, 1);
     DEV_Delay_ms(200);
 }
@@ -76,18 +77,11 @@ parameter:
 ******************************************************************************/
 void EPD_7IN5B_V2_WaitUntilIdle(void)
 {
-	Debug("e-Paper busy\r\n");
-	unsigned char busy;
-	do	{
-		EPD_7IN5B_V2_SendCommand(0x71);
-		busy = DEV_Digital_Read(EPD_BUSY_PIN);
-		busy =!(busy & 0x01);        
-	}while(busy);
-	DEV_Delay_ms(200);      
+    Debug("e-Paper busy\r\n");
+	while(!(DEV_Digital_Read(EPD_BUSY_PIN)));
+	DEV_Delay_ms(20);      
 	Debug("e-Paper busy release\r\n");
-		
 }
-
 
 /******************************************************************************
 function :	Turn On Display
@@ -194,6 +188,9 @@ UBYTE EPD_7IN5B_V2_Init_Part(void)
 	EPD_7IN5B_V2_SendCommand(0X50);			//VCOM AND DATA INTERVAL SETTING
 	EPD_7IN5B_V2_SendData(0xA9);
 	EPD_7IN5B_V2_SendData(0x07);
+
+    partFlag = 0;
+
     return 0;
 }
 
@@ -289,45 +286,6 @@ void EPD_7IN5B_V2_Display(const UBYTE *blackimage, const UBYTE *ryimage)
     EPD_7IN5B_V2_TurnOnDisplay();
 }
 
-void EPD_7IN5B_DisplayPart(const UBYTE *Image, UWORD xstart, UWORD ystart, UWORD image_width, UWORD image_heigh, UBYTE Block)
-{
-	unsigned long i, j;
-	UWORD Width, Height;
-	Width = (EPD_7IN5B_V2_WIDTH % 8 == 0)? (EPD_7IN5B_V2_WIDTH / 8 ): (EPD_7IN5B_V2_WIDTH / 8 + 1);
-	Height = EPD_7IN5B_V2_HEIGHT;
-	
-    if(Block == 0)
-    {
-        EPD_7IN5B_V2_SendCommand(0x10);
-        for(i=0; i<Height; i++) {
-            for(j=0; j<Width; j++) {
-                if(i<image_heigh+ystart && i>=ystart && j<(image_width+xstart)/2 && j>=xstart/2) {
-                    EPD_7IN5B_V2_SendData(Image[(j-xstart/2) + (image_width/2*(i-ystart))]);
-                }
-                else {
-                    EPD_7IN5B_V2_SendData(0xff);
-                }
-            }
-        }
-    }
-    
-    if(Block == 1)
-    {
-        EPD_7IN5B_V2_SendCommand(0x13);
-        for(i=0; i<Height; i++) {
-            for(j=0; j<Width; j++) {
-                if(i<image_heigh+ystart && i>=ystart && j<(image_width+xstart)/2 && j>=xstart/2) {
-                    EPD_7IN5B_V2_SendData(Image[(j-xstart/2) + (image_width/2*(i-ystart))]);
-                }
-                else {
-                    EPD_7IN5B_V2_SendData(0x00);
-                }
-            }
-        }
-        EPD_7IN5B_V2_TurnOnDisplay();
-    }
-}
-
 //0 1 is a black area and 2 3 is a red area
 void EPD_7IN5B_V2_WritePicture(const UBYTE *blackimage, UBYTE Block)
 {
@@ -410,13 +368,16 @@ void EPD_7IN5B_V2_Display_Partial(const UBYTE *Image, UWORD Xstart, UWORD Ystart
 	EPD_7IN5B_V2_SendData(Yend%256-1);  //y-end
 	EPD_7IN5B_V2_SendData(0x01);		
 
-    EPD_7IN5B_V2_SendCommand(0x10);   //Write Black and White image to RAM
-    for (UDOUBLE j = 0; j < Height; j++) {
-        for (UDOUBLE i = 0; i < Width; i++) {
-            EPD_7IN5B_V2_SendData(0xff);
+    if(partFlag == 0)
+    {
+        partFlag = 1;
+        EPD_7IN5B_V2_SendCommand(0x10);   //Write Black and White image to RAM
+        for (UDOUBLE j = 0; j < Height; j++) {
+            for (UDOUBLE i = 0; i < Width; i++) {
+                EPD_7IN5B_V2_SendData(0xff);
+            }
         }
     }
-
     EPD_7IN5B_V2_SendCommand(0x13);   //Write Black and White image to RAM
     for (UDOUBLE j = 0; j < Height; j++) {
         for (UDOUBLE i = 0; i < Width; i++) {
@@ -427,13 +388,15 @@ void EPD_7IN5B_V2_Display_Partial(const UBYTE *Image, UWORD Xstart, UWORD Ystart
     EPD_7IN5B_V2_SendCommand(0x92);
 }
 
-
 /******************************************************************************
 function :	Enter sleep mode
 parameter:
 ******************************************************************************/
 void EPD_7IN5B_V2_Sleep(void)
 {
+    EPD_7IN5B_V2_SendCommand(0X50);  	//VCOM AND DATA INTERVAL SETTING			
+    EPD_7IN5B_V2_SendData(0xF7);        //WBmode:VBDF 17|D7 VBDW 97 VBDB 57		WBRmode:VBDF F7 VBDW 77 VBDB 37  VBDR B7	
+
     EPD_7IN5B_V2_SendCommand(0X02);  	//power off
     EPD_7IN5B_V2_WaitUntilIdle();
     EPD_7IN5B_V2_SendCommand(0X07);  	//deep sleep

@@ -84,6 +84,9 @@ int main(void)
     
 #elif epd2in9V2
     EPD_2in9_V2_test();
+
+#elif epd2in9V3
+    EPD_2in9_V3_test();
     
 #elif epd2in9bc
     EPD_2in9bc_test();

@@ -181,6 +181,8 @@ class EPD:
         self.send_data(0xA9)
         self.send_data(0x07)
 
+        self.partFlag=0
+        
         # EPD hardware init end
         return 0
 
@@ -271,8 +273,8 @@ class EPD:
         self.send_data ((Yend-1)%256)  #y-end
         self.send_data (0x01)
 
-        if self.partFlag == 1:
-            self.partFlag = 0
+        if self.partFlag == 0:
+            self.partFlag = 1
             self.send_command(0x10)
             for j in range(Height):
                     for i in range(Width):

@@ -25,6 +25,7 @@ void setup() {
 
     // EPD_2in9_test();
     // EPD_2in9_V2_test();
+    // EPD_2in9_V3_test();
     // EPD_2in9bc_test();
     // EPD_2in9b_V3_test();
     // EPD_2in9b_V4_test();
@@ -67,8 +68,8 @@ void setup() {
     // EPD_5in79b_test();
     // EPD_5in79g_test();
 
-    EPD_5in83_V2_test();
-    // EPD_5in83b_V2_test();
+    // EPD_5in83_V2_test();
+    EPD_5in83b_V2_test();
 
     // EPD_7in3e_test();
     // EPD_7in3g_test();

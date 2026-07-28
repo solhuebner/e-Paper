@@ -75,6 +75,9 @@ else ifeq ($(EPD), epd2in9)
 else ifeq ($(EPD), epd2in9V2)
 	OBJ_C_EPD = ${DIR_EPD}/EPD_2in9_V2.c
 	OBJ_C_Examples = ${DIR_Examples}/EPD_2in9_V2_test.c
+else ifeq ($(EPD), epd2in9V3)
+	OBJ_C_EPD = ${DIR_EPD}/EPD_2in9_V3.c
+	OBJ_C_Examples = ${DIR_Examples}/EPD_2in9_V3_test.c
 else ifeq ($(EPD), epd2in9bc)
 	OBJ_C_EPD = ${DIR_EPD}/EPD_2in9bc.c
 	OBJ_C_Examples = ${DIR_Examples}/EPD_2in9bc_test.c
