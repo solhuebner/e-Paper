@@ -200,7 +200,14 @@ static void DEV_GPIOConfig(void)
     DEV_Digital_Write(EPD_DC_PIN, 0);
     DEV_Digital_Write(EPD_RST_PIN, 0);
     // DEV_Digital_Write(EPD_BUSY_PIN, 0);
+
+
     DEV_Digital_Write(EPD_PWR_PIN, 1);	
+    DEV_Delay_ms(30);
+    DEV_Digital_Write(EPD_PWR_PIN, 0);	
+    DEV_Delay_ms(30);
+    DEV_Digital_Write(EPD_PWR_PIN, 1);	
+    DEV_Delay_ms(30);
 }
 
 /******************************************************************************

@@ -89,6 +89,13 @@ def delay_ms(delaytime):
         
 def module_init():
     spi.DEV_ModuleInit()
+    spi.DEV_Digital_Write(EPD_PWR_PIN, 1)
+    time.sleep(30 / 1000.0)
+    spi.DEV_Digital_Write(EPD_PWR_PIN, 0)
+    time.sleep(30 / 1000.0)
+    spi.DEV_Digital_Write(EPD_PWR_PIN, 1)
+    time.sleep(30 / 1000.0)
+
 
 def module_exit():
     spi.DEV_ModuleExit()
