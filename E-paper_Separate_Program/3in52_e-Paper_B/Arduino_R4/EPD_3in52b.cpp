@@ -109,7 +109,10 @@ void EPD_3IN52B_Init(void)
     EPD_3IN52B_SendCommand(0x04); //POWER ON
 	DEV_Delay_ms(100);
     EPD_3IN52B_ReadBusy();
-
+    
+    EPD_3IN52B_SendCommand(0x50);	 
+    EPD_3IN52B_SendData(0x87);	
+    
     EPD_3IN52B_SendCommand(0x00);	 
     EPD_3IN52B_SendData(0x03);	
     EPD_3IN52B_SendData(0x0D);	

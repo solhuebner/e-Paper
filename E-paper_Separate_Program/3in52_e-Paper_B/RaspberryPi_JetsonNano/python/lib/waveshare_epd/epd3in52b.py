@@ -116,6 +116,9 @@ class EPD:
         self.send_command(0x04) 
         epdconfig.delay_ms(100)  
         self.ReadBusyH()
+        
+        self.send_command(0x50)  
+        self.send_data(0x87)
 
         self.send_command(0x00)  
         self.send_data(0x03)
