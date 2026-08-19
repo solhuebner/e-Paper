@@ -56,6 +56,7 @@ int EPD_test(void)
 
 #if 1   //show image for array    
     Debug("show image for array\r\n");
+    EPD_10in85g_Init_Fast();
     EPD_10in85g_Display(gImage_10in85G);
     DEV_Delay_ms(2000);
 #endif
@@ -63,6 +64,7 @@ int EPD_test(void)
 #if 1 // Drawing on the image
     //1.Select Image
     printf("SelectImage:BlackImage\r\n");
+    EPD_10in85g_Init();
     Paint_SelectImage(Image);
     Paint_Clear(EPD_10in85g_WHITE);
 

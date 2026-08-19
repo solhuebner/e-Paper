@@ -161,9 +161,32 @@ void EPD_10in85g_Init(void)
     EPD_10in85g_SendCommand_ALL(0x4D);
     EPD_10in85g_SendData_ALL(0x78);	
 
+    EPD_10in85g_SendCommand_ALL(0xE0);
+    EPD_10in85g_SendData_ALL(0x01);
+
+    EPD_10in85g_SendCommand_ALL(0xE5);
+    EPD_10in85g_SendData_ALL(0x08); 
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x01); 
+
     EPD_10in85g_SendCommand_ALL(0x00);	//0x00
     EPD_10in85g_SendData_ALL(0x2F);	
-    EPD_10in85g_SendData_ALL(0x29);	
+    EPD_10in85g_SendData_ALL(0x21);	
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x02); 
+
+    EPD_10in85g_SendCommand_ALL(0x00);	//0x00
+    EPD_10in85g_SendData_ALL(0x2F);	
+    EPD_10in85g_SendData_ALL(0x21);	
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x00); 
+
+    EPD_10in85g_SendCommand_ALL(0x01);	//0x00
+    EPD_10in85g_SendData_ALL(0x07);	
+    EPD_10in85g_SendData_ALL(0x00);	
 
     EPD_10in85g_SendCommand_ALL(0x06);//47uH
     EPD_10in85g_SendData_ALL(0x0d);
@@ -174,7 +197,75 @@ void EPD_10in85g_Init(void)
     EPD_10in85g_SendData_ALL(0x3D);
     EPD_10in85g_SendData_ALL(0x0C);
 
-    EPD_10in85g_SendCommand_ALL(0x06);	//0x06
+    EPD_10in85g_SendCommand_ALL(0x30);
+    EPD_10in85g_SendData_ALL(0x08); 
+
+    EPD_10in85g_SendCommand_ALL(0x50);	//0x50
+    EPD_10in85g_SendData_ALL(0x37);	
+
+    EPD_10in85g_SendCommand_ALL(0x61);//0x61	
+    EPD_10in85g_SendData_ALL(EPD_10in85g_WIDTH/256);	
+    EPD_10in85g_SendData_ALL(EPD_10in85g_WIDTH%256);	
+    EPD_10in85g_SendData_ALL(EPD_10in85g_HEIGHT/256);	
+    EPD_10in85g_SendData_ALL(EPD_10in85g_HEIGHT%256);	
+
+    EPD_10in85g_SendCommand_ALL(0x65);	//0x65
+    EPD_10in85g_SendData_ALL(0x00);
+    EPD_10in85g_SendData_ALL(0x00);
+    EPD_10in85g_SendData_ALL(0x00);
+    EPD_10in85g_SendData_ALL(0x00);
+
+    EPD_10in85g_SendCommand_ALL(0xE3);
+    EPD_10in85g_SendData_ALL(0x88);  
+
+    EPD_10in85g_SendCommand_ALL(0xE9);
+    EPD_10in85g_SendData_ALL(0x01);   
+
+    EPD_10in85g_SendCommand_ALL(0xB8);
+    EPD_10in85g_SendData_ALL(0xB5);  
+    DEV_Delay_ms(200);
+
+    EPD_10in85g_SendCommand_ALL(0x04); //Power on
+    DEV_Delay_ms(500);
+    EPD_10in85g_ReadBusy();          //waiting for the electronic paper IC to release the idle signal
+}
+
+void EPD_10in85g_Init_Fast(void)
+{
+	EPD_10in85g_Reset();
+    EPD_10in85g_ReadBusy();
+
+    EPD_10in85g_SendCommand_ALL(0x4D);
+    EPD_10in85g_SendData_ALL(0x78);	
+
+    EPD_10in85g_SendCommand_ALL(0xE0);
+    EPD_10in85g_SendData_ALL(0x01);
+
+    EPD_10in85g_SendCommand_ALL(0xE5);
+    EPD_10in85g_SendData_ALL(0x08); 
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x01); 
+
+    EPD_10in85g_SendCommand_ALL(0x00);	//0x00
+    EPD_10in85g_SendData_ALL(0x2F);	
+    EPD_10in85g_SendData_ALL(0x21);	
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x02); 
+
+    EPD_10in85g_SendCommand_ALL(0x00);	//0x00
+    EPD_10in85g_SendData_ALL(0x2F);	
+    EPD_10in85g_SendData_ALL(0x21);	
+
+    EPD_10in85g_SendCommand_ALL(0xA2);
+    EPD_10in85g_SendData_ALL(0x00); 
+
+    EPD_10in85g_SendCommand_ALL(0x01);	//0x00
+    EPD_10in85g_SendData_ALL(0x07);	
+    EPD_10in85g_SendData_ALL(0x00);	
+
+    EPD_10in85g_SendCommand_ALL(0x06);//47uH
     EPD_10in85g_SendData_ALL(0x0d);
     EPD_10in85g_SendData_ALL(0x12);
     EPD_10in85g_SendData_ALL(0x30);
@@ -182,6 +273,9 @@ void EPD_10in85g_Init(void)
     EPD_10in85g_SendData_ALL(0x19);
     EPD_10in85g_SendData_ALL(0x3D);
     EPD_10in85g_SendData_ALL(0x0C);
+
+    EPD_10in85g_SendCommand_ALL(0x30);
+    EPD_10in85g_SendData_ALL(0x08); 
 
     EPD_10in85g_SendCommand_ALL(0x50);	//0x50
     EPD_10in85g_SendData_ALL(0x37);	
@@ -198,20 +292,28 @@ void EPD_10in85g_Init(void)
     EPD_10in85g_SendData_ALL(0x00);	
     EPD_10in85g_SendData_ALL(0x00);	
 
-    EPD_10in85g_SendCommand_ALL(0xE0);
-    EPD_10in85g_SendData_ALL(0x01);
-
     EPD_10in85g_SendCommand_ALL(0xE3);
-    EPD_10in85g_SendData_ALL(0x08);  
-
-    EPD_10in85g_SendCommand_ALL(0xE5);
-    EPD_10in85g_SendData_ALL(0x08); 
+    EPD_10in85g_SendData_ALL(0x88);  
 
     EPD_10in85g_SendCommand_ALL(0xE9);
     EPD_10in85g_SendData_ALL(0x01);   
 
+    EPD_10in85g_SendCommand_ALL(0xB8);
+    EPD_10in85g_SendData_ALL(0xB5);  
+    DEV_Delay_ms(200);
+
     EPD_10in85g_SendCommand_ALL(0x04); //Power on
+    DEV_Delay_ms(500);
     EPD_10in85g_ReadBusy();          //waiting for the electronic paper IC to release the idle signal
+
+    //Fast
+	EPD_10in85g_SendCommand_ALL(0xE0);
+	EPD_10in85g_SendData_ALL(0x03);    			
+	EPD_10in85g_SendCommand_ALL(0xE6);
+	EPD_10in85g_SendData_ALL(92);
+	EPD_10in85g_SendCommand_ALL(0xA5);		
+	EPD_10in85g_SendData_ALL(0x00);
+	EPD_10in85g_ReadBusy();          //waiting for the electronic paper IC to release the idle signal
 }
 
 /******************************************************************************

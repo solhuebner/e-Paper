@@ -24,12 +24,14 @@ void setup() {
     Paint_SetScale(4);
 
 #if 1   // show bmp
+    EPD_10in85g_Init_Fast();
     EPD_10in85g_DisplayPart(Image4color,10,10,400,300);
     DEV_Delay_ms(1500);
 #endif
 
 #if 1 // Drawing on the image
     //1.Select Image
+    EPD_10in85g_Init();
     printf("SelectImage:BlackImage\r\n");
     Paint_SelectImage(Image);
     Paint_Clear(EPD_10in85g_WHITE);

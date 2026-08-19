@@ -58,17 +58,19 @@ try:
     
     # read bmp file 
     print("2.read bmp file")
+    epd.Init_Fast()
     Himage = Image.open(os.path.join(picdir, '10in85G.bmp'))
     epd.display(epd.getbuffer(Himage))
     time.sleep(3)
 
     print("clearing...")
+    epd.Init()
     epd.Clear()
 
     print("goto sleep...")
     epd.sleep()
 except:
-    print("goto sleep...")
+    print("goto sleep...11111")
     epd.sleep()
 
 

@@ -29,7 +29,6 @@
 ******************************************************************************/
 #include "EPD_Test.h"
 #include "EPD_10in85g.h"
-#include <time.h> 
 #include <stdio.h>
 
 int EPD_10in85g_test(void)
@@ -41,13 +40,8 @@ int EPD_10in85g_test(void)
     }
 
     Debug("e-Paper Init and Clear...\r\n");
-	EPD_10in85g_Init    ();
-
-	struct timespec start={0,0}, finish={0,0}; 
-    clock_gettime(CLOCK_REALTIME,&start);
+	EPD_10in85g_Init();
     EPD_10in85g_Clear(EPD_10in85g_WHITE);
-	clock_gettime(CLOCK_REALTIME,&finish);
-    Debug("%ld S\r\n",finish.tv_sec-start.tv_sec);	
 
     //Create a new image cache
     UBYTE *Image;
@@ -68,7 +62,8 @@ int EPD_10in85g_test(void)
     DEV_Delay_ms(2000);
 #endif
 
-#if 1   //show image for array    
+#if 1   //show image for array  
+    EPD_10in85g_Init_Fast();
     Debug("show image for array\r\n");
     EPD_10in85g_Display(gImage_10in85G);
     DEV_Delay_ms(2000);
@@ -76,6 +71,7 @@ int EPD_10in85g_test(void)
 
 #if 1 // Drawing on the image
     //1.Select Image
+    EPD_10in85g_Init();
     printf("SelectImage:BlackImage\r\n");
     Paint_SelectImage(Image);
     Paint_Clear(EPD_10in85g_WHITE);

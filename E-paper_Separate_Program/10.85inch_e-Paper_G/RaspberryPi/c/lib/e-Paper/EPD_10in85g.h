@@ -45,6 +45,7 @@
 #define  EPD_10in85g_RED     0x3
 
 void EPD_10in85g_Init(void);
+void EPD_10in85g_Init_Fast(void);
 void EPD_10in85g_Clear(UBYTE color);
 void EPD_10in85g_Display(const UBYTE *Image);
 void EPD_10in85g_Sleep(void);

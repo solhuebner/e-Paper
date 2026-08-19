@@ -105,11 +105,33 @@ class EPD():
 
         self.SendCommand(0x4D)
         self.SendData(0x78)	
-       
+
+        self.SendCommand(0xE0)
+        self.SendData(0x01)
+
+        self.SendCommand(0xE5)
+        self.SendData(0x08)
+
+        self.SendCommand(0xA2)
+        self.SendData(0x01)
+
+        self.SendCommand(0x00)
+        self.SendData(0x2F)
+        self.SendData(0x21)
+
+        self.SendCommand(0xA2)
+        self.SendData(0x02)
 
         self.SendCommand(0x00)
         self.SendData(0x2F)	
-        self.SendData(0x29)	
+        self.SendData(0x21)	
+
+        self.SendCommand(0xA2)
+        self.SendData(0x00)
+
+        self.SendCommand(0x01)
+        self.SendData(0x07)	
+        self.SendData(0x00)	
 
         self.SendCommand(0x06)
         self.SendData(0x0d)
@@ -120,14 +142,8 @@ class EPD():
         self.SendData(0x3D)
         self.SendData(0x0C)
 
-        self.SendCommand(0x06)
-        self.SendData(0x0d)
-        self.SendData(0x12)
-        self.SendData(0x30)
-        self.SendData(0x20)
-        self.SendData(0x19)
-        self.SendData(0x3D)
-        self.SendData(0x0C)
+        self.SendCommand(0x30)
+        self.SendData(0x08)
 
         self.SendCommand(0x50)
         self.SendData(0x37)	
@@ -144,20 +160,110 @@ class EPD():
         self.SendData(0x00)	
         self.SendData(0x00)	
 
+        self.SendCommand(0xE3)
+        self.SendData(0x88)  
+
+        self.SendCommand(0xE9)
+        self.SendData(0x01)  
+
+        self.SendCommand(0xB8)
+        self.SendData(0xB5) 
+        epdconfig.delay_ms(200)  
+
+        self.SendCommand(0x04)
+        epdconfig.delay_ms(500)  
+        self.ReadBusyH()
+        self.CS_ALL(1)
+
+    def Init_Fast(self):
+        print("EPD init...")
+        epdconfig.module_init()
+        
+        self.Reset() 
+        self.ReadBusyH()
+
+        self.CS_ALL(0)
+
+        self.SendCommand(0x4D)
+        self.SendData(0x78)	
+
         self.SendCommand(0xE0)
         self.SendData(0x01)
 
-        self.SendCommand(0xE3)
-        self.SendData(0x08)  
-
         self.SendCommand(0xE5)
-        self.SendData(0x08) 
+        self.SendData(0x08)
+
+        self.SendCommand(0xA2)
+        self.SendData(0x01)
+
+        self.SendCommand(0x00)
+        self.SendData(0x2F)
+        self.SendData(0x21)
+
+        self.SendCommand(0xA2)
+        self.SendData(0x02)
+
+        self.SendCommand(0x00)
+        self.SendData(0x2F)	
+        self.SendData(0x21)
+
+        self.SendCommand(0xA2)
+        self.SendData(0x00)
+
+        self.SendCommand(0x01)
+        self.SendData(0x07)	
+        self.SendData(0x00)
+
+        self.SendCommand(0x06)
+        self.SendData(0x0d)
+        self.SendData(0x12)
+        self.SendData(0x30)
+        self.SendData(0x20)
+        self.SendData(0x19)
+        self.SendData(0x3D)
+        self.SendData(0x0C)
+
+        self.SendCommand(0x30)
+        self.SendData(0x08)
+
+        self.SendCommand(0x50)
+        self.SendData(0x37)	
+
+        self.SendCommand(0x61)
+        self.SendData(int(self.width/256))
+        self.SendData(self.width%256)
+        self.SendData(int(self.height/256))
+        self.SendData(self.height%256)
+
+        self.SendCommand(0x65)
+        self.SendData(0x00)	
+        self.SendData(0x00)	
+        self.SendData(0x00)	
+        self.SendData(0x00)	
+
+        self.SendCommand(0xE3)
+        self.SendData(0x88)  
 
         self.SendCommand(0xE9)
-        self.SendData(0x01)   
+        self.SendData(0x01)  
+
+        self.SendCommand(0xB8)
+        self.SendData(0xB5) 
+        epdconfig.delay_ms(200)  
 
         self.SendCommand(0x04)
+        epdconfig.delay_ms(500)  
         self.ReadBusyH()
+
+        #Fast
+        self.SendCommand(0xE0)
+        self.SendData(0x03);    			
+        self.SendCommand(0xE6)
+        self.SendData(92);
+        self.SendCommand(0xA5)		
+        self.SendData(0x00)
+        self.ReadBusyH() 
+            
         self.CS_ALL(1)
     
     def getbuffer(self, image):
